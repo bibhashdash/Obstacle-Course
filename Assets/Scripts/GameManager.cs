@@ -4,19 +4,26 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-
-  public GameObject WallPrefab;
-  public GameObject PickupPrefab;
+  public GameObject BoostPickupPrefab;
+  public GameObject DamageHazardPrefab;
+  public GameObject DasherPrefab;
 
   // Start is called before the first frame update
   void Start()
   {
-    // Create walls or pickups every 20 units in the z.
-    // Use % odd even to pick wall or pickup.
-
-    //for (int i = 0; i < 10; i++)
-    //{
-    //  Instantiate(wallPrefab, transform.position, Quaternion.identity);
-    //}
+    InvokeRepeating(nameof(CreateNewBoostPickup), 0f, 1.5f);
+  }
+  private void CreateNewBoostPickup()
+  {
+    Vector3 newPosition = new(DasherPrefab.transform.position.x, 0.63f, DasherPrefab.transform.position.z + 20);
+    float randomNumber = Random.Range(0f, 1f);
+    if (randomNumber < 0.5f)
+    {
+      Instantiate(BoostPickupPrefab, newPosition, Quaternion.identity);
+    }
+    else
+    {
+      Instantiate(DamageHazardPrefab, newPosition, Quaternion.identity);
+    }
   }
 }
